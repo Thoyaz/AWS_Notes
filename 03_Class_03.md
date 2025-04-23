@@ -1,145 +1,177 @@
-Agenda:
-1. IP Addressing Overview
-2. Understanding VPC
-3. Deploying VPC in depth.
-
----
-Why we need IP Addressing and VPC..?
-![alt text](./Images/Why_we_need_VPC.png)
-
-1. IP Addressing
----------------
-* it is used to communicate servers each other, If one server wants to communicate with anohter server we can use this IP's
-* There are two types of IP Addressing
-    * IPv4 ( We still using this )
-    * IPV6
-
-IPv4:
-------
-* All IPv4 ranges are comes under 0.0.0.0 to 255.255.255.255
-
-* There are 5 types of classes in IPv4
-
-Class A : 1.0.0.0 to 126.255.255.255 \
-Private IP Range : 10.0.0.0 to 10.255.255.255
-
-NOTE : 127.X.X.X is for Loopback Range
-
-Class B : 128.0.0.0 to 191.255.255.255 \
-Private IP Range : 172.16.0.0 to 172.31.255.255
-
-Class C : 192.0.0.0 to 223.255.255.255 \
-Private IP Range : 192.168.0.0 to 192.168.255.255
-
--------------------------------------------------
-WE DONT USE BELOW CLASSES 
-------------------------------------------------
-Class D : 224.0.0.0 to 239.255.255.255
-
-Class E : 240.0.0.0 to 255.255.255.255
-
-IN OUR DAILY LIFE WE ONLY USE PRIVATE IP's
---------------------------------------------
-Private IP Range : 10.0.0.0 to 10.255.255.255
-Private IP Range : 172.16.0.0 to 172.31.255.255
-Private IP Range : 192.168.0.0 to 192.168.255.255
+# ☁️ AWS Networking & VPC Lab Guide
 
 ---
 
-## Understanding VPC ( Virtual Private Cloud )
-1. Create VPC with IP Range 10.55.0.0/16 in region us-east-1.
-2. Create subnets 1 2 3 with range 10.55.1.0/24, 10.55.2.0/24, 10.55.3.0/24
-3. Enable public IP on Subnets
-4. Enable DNS Hostnames on VPC.
-5. Create an Internet Gateway ( IGW ) and attach it to VPC
-6. Create routing table and add subnets to it, Add routs to routing table.
-7. Create a linux server and create SG and KeyPair while creating it.
-8. Connect to Linux Server.
+## 🗂 Agenda
 
-
-Lab for above task 
------------------
-
-### Step - 1 -> Create VPC with IP Range 10.55.0.0/16 in region us-east-1
-
-* Goto VPC service in AWS portal
-* Select VPC Only on Resource to create section
-    * Give name for VPC
-    * Give IPv4 CIDR ex : 10.55.0.0/16
-* Click on Create
-
-__Note : VPC which we had create that is not created in any region, It is just created that it.__
+1. [IP Addressing Overview](#1-ip-addressing-overview)  
+2. [Understanding VPC](#2-understanding-vpc)  
+3. [Deploying VPC in Depth](#3-deploying-vpc-in-depth-lab)
 
 ---
 
-### Step - 2 -> Create subnets 1 2 3 with range 10.55.1.0/24, 10.55.2.0/24, 10.55.3.0/24
+## ❓ Why Do We Need IP Addressing & VPC?
 
-* Create Subnets 1 now
-    * Goto Subnet and click on Create Subnet
-    * Select the VPC first, It refers in which VPC you want to create your subnet
-    * Give the Subnet 1 name
-    * Select Availablity Zone
-    * Select VPC CIDR Block
-    * Enter the Subnet Range Ex : 10.55.1.0/24
-* Click on Create
-* Follow the same process to create another two subnets
-* But create subnet 2 in 1b AZ and Subnet 3 in 1c AZ
+> IP Addressing and VPCs are essential for securely organizing and connecting cloud resources.
+
+![Why We Need VPC](./Images/Why_we_need_VPC.png)
 
 ---
 
-### Step - 3 -> Enable public IP on Subnets
+## 1. 🌐 IP Addressing Overview
 
-* Enable public IP on Subnet, So that when you are using subnet to create any EC2, Public IP will be auto assigned
-    * To do that, follow below steps
-    * Select subnet 1
-    * Click on __Action__, CLick on __Edit Subnet settings__
-    * Click the Check box option called __Enable auto-assign public IPv4 address__ in __Auto-Assign IP Settings__
-    * Follow same process for Subnet 2 and Subnet 3  
+### 📌 What is IP Addressing?
+
+- IP addressing is how servers **communicate** with one another.
+- Every device in a network uses an **IP address** to send and receive data.
 
 ---
 
-### Step - 4 -> Enable DNS Hostnames on VPC
-* Select the VPC
-    * Edit VPC settings
-    * Click on check box, __Enable DNS hostname__ on DNS Settings
+### 🧠 Types of IP Addressing
 
-![alt text](./Images/VPC_Intro.png)
+- **IPv4** – Commonly used today (e.g., `192.168.1.1`)
+- **IPv6** – Newer, supports more devices
 
 ---
 
-### Step - 5 -> Create an Internet Gateway ( IGW ) and attach it to VPC
-* Internet Gateway is use to give access for servers to connect to internet
-* To create IGW, Click on create
-* Give the name, and Select VPC
+### 🧮 IPv4 Address Structure
+
+- IP range: `0.0.0.0` to `255.255.255.255`
+- Divided into 5 classes (A to E)
+
+| Class | Range                       | Private IP Range                     | Notes                           |
+|-------|-----------------------------|--------------------------------------|----------------------------------|
+| A     | `1.0.0.0` – `126.255.255.255` | `10.0.0.0` – `10.255.255.255`       | Large networks                   |
+| B     | `128.0.0.0` – `191.255.255.255` | `172.16.0.0` – `172.31.255.255`   | Medium networks                  |
+| C     | `192.0.0.0` – `223.255.255.255` | `192.168.0.0` – `192.168.255.255` | Small/home networks              |
+| D     | `224.0.0.0` – `239.255.255.255` | *N/A*                              | Used for multicast (not private) |
+| E     | `240.0.0.0` – `255.255.255.255` | *N/A*                              | Reserved for research            |
+
+> ⚠️ **Note:** `127.x.x.x` is reserved for **Loopback** (localhost).
 
 ---
 
-### Step - 6 -> Create routing table and add subnets to it
+### ✅ Commonly Used Private IP Ranges
 
-![alt text](./Images/RT_Example.jpg)
-* In the above image if we want to goto Bengaluru, Sign board will show you the way to reach the destination, in same way route table will show the way for traffic, if user want to goto web server, Route table will send traffic to Web servers.
+- `10.0.0.0/8`  
+- `172.16.0.0/12`  
+- `192.168.0.0/16`
 
-* Not to create RT, Click on create RT
-    * Give Name for RT
-    * Select VPC
-    * By Default when we are creating VPC, One RT will be created, So we need to nake default RT Main = No, We need you make newly create RT Main = Yes
-    * To add Subnets to RT
-        * Select RT, Click on Edit Subnet Associations
-        * Select the Subnets, Click on Save Association
-    * Now to semd the traffic from server to out side, We need to send it throw IGW
-        * To do that Select RT, select __Rout__ in bottom
-        * Edit the Route and add route as shown in below
-
-![alt text](./Images/RT_Route_Edit.png)
-
-__NOTE : Here fmro above image, We see thay 10.55.0.0/16 destination right.
-Here apart from 10.55.0.0/16 all the traffic need to go throw internetGate way__
+> 🧑‍💻 In most real-world scenarios, **only private IPs** are used inside a VPC.
 
 ---
 
-### step - 7 -> Create a linux server and create SG and KeyPair while creating it.
+## 2. 🛡 Understanding VPC (Virtual Private Cloud)
+
+A **VPC** is a logically isolated section of the AWS cloud where you can launch AWS resources in a virtual network.
 
 ---
 
-### step - 8 -> Connect to Linux Server.
-* Use SSH to connect to Linux Server
+## 3. 🚀 Deploying VPC in Depth (Lab)
+
+---
+
+### 🧪 Step 1: Create VPC
+
+> VPC with IP range `10.55.0.0/16` in region `us-east-1`
+
+1. Go to **VPC service** on AWS Console  
+2. Select **VPC Only** under *Create VPC*  
+3. Provide:
+   - Name for VPC  
+   - IPv4 CIDR block: `10.55.0.0/16`  
+4. Click **Create VPC**
+
+> 📝 Note: VPCs are global but associated with a specific region.
+
+---
+
+### 🧪 Step 2: Create Subnets
+
+Subnets:
+- `10.55.1.0/24` → AZ: `us-east-1a`
+- `10.55.2.0/24` → AZ: `us-east-1b`
+- `10.55.3.0/24` → AZ: `us-east-1c`
+
+1. Navigate to **Subnets** → Click **Create Subnet**
+2. Select your VPC
+3. Name the subnet
+4. Choose AZ and set CIDR block
+5. Repeat for all 3 subnets
+
+---
+
+### 🧪 Step 3: Enable Auto-Assign Public IP
+
+> Allows EC2 instances to automatically get public IPs
+
+1. Select a subnet  
+2. Go to **Actions → Edit Subnet Settings**  
+3. Check ✅ **Auto-assign public IPv4 address**
+4. Repeat for all subnets
+
+---
+
+### 🧪 Step 4: Enable DNS Hostnames
+
+1. Select the VPC  
+2. Go to **Actions → Edit VPC Settings**
+3. Check ✅ **Enable DNS Hostnames**
+
+![Enable DNS Hostnames](./Images/VPC_Intro.png)
+
+---
+
+### 🧪 Step 5: Create Internet Gateway (IGW)
+
+> Required for internet access
+
+1. Navigate to **Internet Gateways**
+2. Click **Create Internet Gateway**
+3. Name it and attach it to your VPC
+
+---
+
+### 🧪 Step 6: Create and Configure Route Table
+
+> Think of route tables as "road signs" for your network
+
+![Route Table Analogy](./Images/RT_Example.jpg)
+
+1. Go to **Route Tables → Create Route Table**
+2. Assign it to your VPC
+3. Set as **Main = Yes**, disable default as main
+4. Go to **Subnet Associations → Edit**  
+   - Select all subnets  
+5. Add route:
+   - Destination: `0.0.0.0/0`
+   - Target: Internet Gateway (IGW)
+
+![Edit Routes](./Images/RT_Route_Edit.png)
+
+> 💬 **Note:** This route says: “Any traffic that’s not part of the `10.55.0.0/16` range → Go to the internet.”
+
+---
+
+### 🧪 Step 7: Launch a Linux EC2 Instance
+
+1. Go to **EC2 → Launch Instance**
+2. Choose Amazon Linux AMI
+3. Create or choose:
+   - Security Group (SG)  
+   - Key Pair (for SSH access)
+4. Select one of your subnets
+
+---
+
+### 🧪 Step 8: Connect to the Linux Server
+
+> Use the Key Pair you downloaded to connect
+
+```bash
+ssh -i "your-key.pem" ec2-user@<EC2-public-IP>
+```
+
+---
+
+## ✅ You’ve Successfully Built a VPC with Public Subnets and Internet Access!
