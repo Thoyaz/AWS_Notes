@@ -69,4 +69,3 @@ Remember to delete Lab
 * Delete Servers ( EC2 Instances )
 * Delete Elastic IP
 * Delete EBS Volumes
-* 
