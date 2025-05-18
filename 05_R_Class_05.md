@@ -56,10 +56,45 @@ EX : 0.0.0.0/0 -> NAT GW
     * Select our __VPC__ in __Network Mapping__
     * select the public Subnets only on __Mappings__
     * Select Security Group ( SG ), Allow All Traffic
-    * Next select __Target Group__ on __Listeners and routing__
-    * Create on Create LB
+    * Next select __Target Group__ on __Listeners and routing__, Follow below images to create TG
+
+![alt text](./Images/AWS_TargetGroup_1.png)
+
+![alt text](./Images/AWS_TargetGroup_2.png)
+
+![alt text](./Images/AWS_TargetGroup_3.png)
+
+![alt text](./Images/AWS_TargetGroup_4.png)
+
+![alt text](./Images/AWS_TargetGroup_5.png)
+
+![alt text](./Images/AWS_TargetGroup_6.png)
+
+### Create on Create LB
 
 ![alt text](./Images/Ways_we_can_reachout_to_servers.png)
+
+* Creating ALB
+
+![alt text](./Images/AWS_Basic_ALB_1.png)
+
+![alt text](./Images/AWS_Basic_ALB_2.png)
+
+![alt text](./Images/AWS_Basic_ALB_3.png)
+
+![alt text](./Images/AWS_Basic_ALB_4.png)
+
+![alt text](./Images/AWS_Basic_ALB_5.png)
+
+![alt text](./Images/AWS_Basic_ALB_6.png)
+
+![alt text](./Images/AWS_Basic_ALB_7.png)
+
+![alt text](./Images/AWS_Basic_ALB_8.png)
+
+![alt text](./Images/AWS_Basic_ALB_9.png)
+
+* __Now try to access ALB DNS Name, So that you can access our KWS Game, Which is hosted on Private Servers__
 
 ---
 Remember to delete Lab
