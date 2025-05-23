@@ -31,7 +31,7 @@ Private Server -> Private RT -> NAT GW -> ALB -> Public RT -> IGW -> Internet ->
 * Create one EC2 Instance in Public Subnet use Amazon Linux
 * Create one EC2 Instance in Private Subnet use Ubuntu machine, While creating instance make sure you enable Public IP ( For Temp Purpus )
 * Now in Public Subnet since we had installed Amazon Linux, By default AWS CLI will be installed on it
-* But in Ec2 instance on Public subnet we had choosed Ubuntu, So we manually install AWS CLI to it
+* But in Ec2 instance on Private subnet we had choosed Ubuntu, So we manually install AWS CLI to it
     * For temp purpos attach IGW to Private Subnet so edit RT to attach IGW to Private Subnet, and Login in to it, Since we had enabled Public IP we can login to it, And install AWS CLI
 
 
