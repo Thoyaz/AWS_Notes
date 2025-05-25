@@ -38,11 +38,14 @@ Private Server -> Private RT -> NAT GW -> ALB -> Public RT -> IGW -> Internet ->
 [Refer Here For Official Doc](https://docs.aws.amazon.com/cli/v1/userguide/install-linux.html#install-linux-bundled-sudo)
 
 ```
-curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+sudo apt update
+sudo apt install unzip curl -y
 
-unzip awscli-bundle.zip
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 
-sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+unzip awscliv2.zip
+
+sudo ./aws/install
 
 aws --version
 ```
@@ -74,6 +77,8 @@ aws --version
 
 * When you created Endpoint, You will see one Route added in Route Table, As shown in below
 
+* __Creating Endpoint will make only connection from Private server to S3, But Private server still need permition to download files frmo s3__
+
 ![alt text](./Images/RT_Created_While_EndPoint_Created.png)
 
 ---
@@ -103,8 +108,15 @@ aws --version
 
 To download file from S3
 ```
-aws s3 cp (--S3-Object-URL--)
+aws s3 cp (--S3-URI--) .
 ```
+Below Example for Download files frmo S3
+```
+aws s3 cp s3://awsendpointsbucket001/terraform_1.12.1_windows_amd64.zip .
+
+aws s3 cp s3://awsendpointsbucket001/terraform_1.12.1_windows_amd64.zip terraform.zip
+```
+
 To Upload file from local to S3
 ```
 aws s3 cp terraform.zip s3://bicket-name/terraform.zip
@@ -114,12 +126,26 @@ aws s3 cp terraform.zip s3://bicket-name/terraform.zip
 
 ![alt text](./Images/Interface_endpoints_implementation.png)
 
+* Assign Role which is created in before lab for public server also, We need that permitions for this lab.
+
+* Open __System Manager__ service
+
+![alt text](./Images/AWS_System_Manager_Step_1.png)
+
+![alt text](./Images/AWS_System_Manager_Step_2.png)
+
+* Initially we will see only public servers only, as shown in below
+
+![alt text](./Images/AWS_System_Manager_Step_3.png)
+
+
+
 * To create interface endpoint
     * First we need to create __SSM endpoint__
         * GOto endpoints, Click on create endpoint
         * Give __name of the endpoint__
         * Service Category : AWS Services
-        * Services : Search for ssm and select com.amazonaws.us-east-1.ssm, Type should be __Interface__
+        * Services : Search for ssm and select __com.amazonaws.us-east-1.ssm__, Type should be __Interface__
         * Select VPC
         * Select Subnets (In our case it is Private Subnet)
         * Select Security Groups
@@ -129,7 +155,7 @@ aws s3 cp terraform.zip s3://bicket-name/terraform.zip
         * GOto endpoints, Click on create endpoint
         * Give __name of the endpoint__
         * Service Category : AWS Services
-        Services : Search for ssm and select com.amazonaws.us-east-1.ssmmessages, Type should be __Interface__
+        Services : Search for ssm and select __com.amazonaws.us-east-1.ssmmessages__, Type should be __Interface__
         * Select VPC
         * Select Subnets (In our case it is Private Subnet)
         * Select Security Groups
@@ -138,7 +164,7 @@ aws s3 cp terraform.zip s3://bicket-name/terraform.zip
         * GOto endpoints, Click on create endpoint
         * Give __name of the endpoint__
         * Service Category : AWS Services
-        Services : Search for ec2 and select com.amazonaws.us-east-1.ec2mmessages, Type should be __Interface__
+        Services : Search for ec2 and select __com.amazonaws.us-east-1.ec2messages__, Type should be __Interface__
         * Select VPC
         * Select Subnets (In our case it is Private Subnet)
         * Select Security Groups
@@ -165,4 +191,10 @@ aws s3 cp terraform.zip s3://bicket-name/terraform.zip
 
 * If we see in above solution we are able to do it for only public servers, But to do it for private servers, We need to use __Interface Endpoints__.
 
+---
 
+### Links : 
+
+PuttyGen Download from below link
+
+https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
