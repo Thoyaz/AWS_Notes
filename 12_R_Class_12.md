@@ -2,7 +2,7 @@ Agenda:
 -------
 1. Types of EC2 Instances
 2. Instance Metadata
-3. Types of EBS Volumes
+3. Types of Storages in AWS
 4. EBS Volumes usecase
 
 ## Types of EC2 Instances
