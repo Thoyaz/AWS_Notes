@@ -137,6 +137,27 @@ Simple Storage Service ( S3 )
 * Now if you reboot the system files will be there in both EBS and Instance Storage Volumes
 * But if you Stop the instance and Start it again we lose the data which is present in Instance Storage
 
+### New CMD'S
+```bash
+sudo mkfs -t ext4 /dev/xvdf
+
+sudo mkdir /mnt/data
+
+sudo mount /dev/xvdf /mnt/data
+
+sudo blkid /dev/xvdf
+
+sudo nano /etc/fstab
+
+Example :
+
+UUID=abcd-1234  /mnt/data  ext4  defaults,nofail  0  2
+
+sudo mount -a
+
+df -h
+```
+
 ### Disadvantages of Instance Storage
 * It is for Temp storage
 * Available for selected machine types
