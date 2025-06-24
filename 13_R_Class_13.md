@@ -70,3 +70,4 @@ certbot certonly --manual --preferred-challenges=dns --email thugsofmpl@gmail.co
 ```bash
 certbot --nginx
 ```
+![alt text](./Images/ssl_tls_cert_03.png)
