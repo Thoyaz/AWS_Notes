@@ -66,3 +66,7 @@ certbot certonly --manual --preferred-challenges=dns --email thugsofmpl@gmail.co
 --server https://acme-v02.api.letsencrypt.org/directory --agree-tos -d tzpc.xyz
 ```
 
+* To use this certificates for our server, use below CMD
+```bash
+certbot --nginx
+```
