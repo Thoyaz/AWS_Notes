@@ -1,10 +1,10 @@
-* ALB
+* Application Load Balencer (ALB)
     * HTTP to HTTPS redirection
     * path/url based routing
     * Blue/Green or Canary Based Deployments
-* WAF
+* Web Application Firewall (WAF)
 
-## Lab - ALB
+## Lab for Application Load Balencer (ALB)
 
 * Create VPC 
 * Create 4 servers
